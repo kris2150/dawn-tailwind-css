@@ -236,6 +236,13 @@
       document.documentElement.classList.add('shopify-design-mode');
     }
     </script>
+
+    {% comment %} Tailwind Code {% endcomment %}
+      <link rel="stylesheet" href="{{ 'app.css' | asset_url }}">
+      <script src="{{ 'app.js' | asset_url }}" defer="defer"></script>
+
+
+
   </head>
 
   <body class="gradient">
@@ -249,7 +256,7 @@
 
     {% sections 'header-group' %}
 
-    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+    <main id="MainContent" class="content-for-layout focus-none bg-blue-600 text-lg" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
 
