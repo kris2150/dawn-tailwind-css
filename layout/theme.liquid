@@ -240,6 +240,10 @@
     {% comment %} Tailwind Code {% endcomment %}
       <link rel="stylesheet" href="{{ 'app.css' | asset_url }}">
       <script src="{{ 'app.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'react-components.js' | asset_url }}" defer="defer"></script>
+      <script src="{{ 'react-algolia.js' | asset_url }}" defer="defer"></script>
+
+
 
 
 
@@ -256,7 +260,17 @@
 
     {% sections 'header-group' %}
 
-    <main id="MainContent" class="content-for-layout focus-none bg-blue-600 text-lg" role="main" tabindex="-1">
+    {% comment %} cartSummaryCode {% endcomment %}
+    <div id="react-cart-summary"></div>
+
+    <div id="custom-search-filter"></div>
+
+
+    <main id="MainContent" class="content-for-layout focus-none  text-lg" role="main" tabindex="-1">
+
+
+      <div id="custom-react-sample"></div>
+      
       {{ content_for_layout }}
     </main>
 

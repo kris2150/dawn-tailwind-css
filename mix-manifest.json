@@ -1,4 +1,6 @@
 {
     "/assets/app.js": "/assets/app.js",
+    "/assets/react-components.js": "/assets/react-components.js",
+    "/assets/react-algolia.js": "/assets/react-algolia.js",
     "/assets/app.css": "/assets/app.css"
 }

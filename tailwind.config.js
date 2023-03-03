@@ -6,11 +6,16 @@ module.exports = {
     './assets/*.liquid',
     './sections/*.liquid',
     './snippets/*.liquid',
+    './src/js/react-components/*.jsx',
     './templates/*.liquid',
     './templates/*.json',
     './templates/customers/*.liquid',
   ],
   theme: {
+    screens: {
+      sm: '375px',
+      'md-down': { max: '767.98px'}
+    },
     extend: {},
   },
   plugins: [],
