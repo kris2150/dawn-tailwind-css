@@ -7,6 +7,8 @@ module.exports = {
     './sections/*.liquid',
     './snippets/*.liquid',
     './src/js/react-components/*.jsx',
+    './src/js/algolia/*.jsx',
+    './src/js/algolia/components/*.jsx',
     './templates/*.liquid',
     './templates/*.json',
     './templates/customers/*.liquid',
