@@ -32,6 +32,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-instantsearch-dom": "^6.39.0",
+    "react-instantsearch-hooks-web": "^6.40.1",
     "reactjs-popup": "^2.0.5"
   }
 }

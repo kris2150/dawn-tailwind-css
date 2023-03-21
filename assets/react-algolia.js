@@ -5865,7 +5865,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Hits = function Hits(_ref) {
-  var hits = _ref.hits;
+  var hits = _ref.hits,
+    handleAddProductToCart = _ref.handleAddProductToCart;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
     className: "grid gap-4 grid-cols-3",
     children: hits.map(function (hit) {
@@ -5880,9 +5881,23 @@ var Hits = function Hits(_ref) {
           className: "grid grid-cols-2",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h3", {
             children: hit.title
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
-            "class": "text-right",
-            children: hit.price
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "text-right",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
+              children: hit.price
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
+              className: "px-4 py-2 bg-green-500 rounded-full",
+              onClick: function onClick() {
+                var formData = {
+                  'items': [{
+                    quantity: 1,
+                    id: hit.objectID
+                  }]
+                };
+                alert(JSON.stringify(formData));
+              },
+              children: "+"
+            })]
           })]
         })]
       });
@@ -37534,6 +37549,116 @@ function _cleanUp(props, searchState, context) {
 
 /***/ }),
 
+/***/ "./node_modules/react-instantsearch-core/dist/es/connectors/connectSortBy.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/react-instantsearch-core/dist/es/connectors/connectSortBy.js ***!
+  \***********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _core_createConnector_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../core/createConnector.js */ "./node_modules/react-instantsearch-core/dist/es/core/createConnector.js");
+/* harmony import */ var _core_indexUtils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core/indexUtils.js */ "./node_modules/react-instantsearch-core/dist/es/core/indexUtils.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
+function getId() {
+  return 'sortBy';
+}
+function getCurrentRefinement(props, searchState, context) {
+  var id = getId(props);
+  var currentRefinement = (0,_core_indexUtils_js__WEBPACK_IMPORTED_MODULE_0__.getCurrentRefinementValue)(props, searchState, context, id, null);
+  if (currentRefinement) {
+    return currentRefinement;
+  }
+  return null;
+}
+
+/**
+ * The connectSortBy connector provides the logic to build a widget that will
+ *  display a list of indices. This allows a user to change how the hits are being sorted.
+ * @name connectSortBy
+ * @requirements Algolia handles sorting by creating replica indices. [Read more about sorting](https://www.algolia.com/doc/guides/relevance/sorting/) on
+ * the Algolia website.
+ * @kind connector
+ * @propType {string} defaultRefinement - The default selected index.
+ * @propType {{value: string, label: string}[]} items - The list of indexes to search in.
+ * @propType {function} [transformItems] - Function to modify the items being displayed, e.g. for filtering or sorting them. Takes an items as parameter and expects it back in return.
+ * @providedPropType {function} refine - a function to remove a single filter
+ * @providedPropType {function} createURL - a function to generate a URL for the corresponding search state
+ * @providedPropType {string[]} currentRefinement - the refinement currently applied
+ * @providedPropType {array.<{isRefined: boolean, label?: string, value: string}>} items - the list of items the HitsPerPage can display.  If no label provided, the value will be displayed.
+ */
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_core_createConnector_js__WEBPACK_IMPORTED_MODULE_1__["default"])({
+  displayName: 'AlgoliaSortBy',
+  $$type: 'ais.sortBy',
+  propTypes: {
+    defaultRefinement: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().string),
+    items: prop_types__WEBPACK_IMPORTED_MODULE_2___default().arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_2___default().shape({
+      label: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().string),
+      value: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().string.isRequired)
+    })).isRequired,
+    transformItems: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().func)
+  },
+  getProvidedProps: function getProvidedProps(props, searchState) {
+    var currentRefinement = getCurrentRefinement(props, searchState, {
+      ais: props.contextValue,
+      multiIndexContext: props.indexContextValue
+    });
+    var items = props.items.map(function (item) {
+      return item.value === currentRefinement ? _objectSpread(_objectSpread({}, item), {}, {
+        isRefined: true
+      }) : _objectSpread(_objectSpread({}, item), {}, {
+        isRefined: false
+      });
+    });
+    return {
+      items: props.transformItems ? props.transformItems(items) : items,
+      currentRefinement: currentRefinement
+    };
+  },
+  refine: function refine(props, searchState, nextRefinement) {
+    var id = getId();
+    var nextValue = _defineProperty({}, id, nextRefinement);
+    var resetPage = true;
+    return (0,_core_indexUtils_js__WEBPACK_IMPORTED_MODULE_0__.refineValue)(searchState, nextValue, {
+      ais: props.contextValue,
+      multiIndexContext: props.indexContextValue
+    }, resetPage);
+  },
+  cleanUp: function cleanUp(props, searchState) {
+    return (0,_core_indexUtils_js__WEBPACK_IMPORTED_MODULE_0__.cleanUpValue)(searchState, {
+      ais: props.contextValue,
+      multiIndexContext: props.indexContextValue
+    }, getId());
+  },
+  getSearchParameters: function getSearchParameters(searchParameters, props, searchState) {
+    var selectedIndex = getCurrentRefinement(props, searchState, {
+      ais: props.contextValue,
+      multiIndexContext: props.indexContextValue
+    });
+    return searchParameters.setIndex(selectedIndex);
+  },
+  getMetadata: function getMetadata() {
+    return {
+      id: getId()
+    };
+  }
+}));
+
+/***/ }),
+
 /***/ "./node_modules/react-instantsearch-core/dist/es/core/context.js":
 /*!***********************************************************************!*\
   !*** ./node_modules/react-instantsearch-core/dist/es/core/context.js ***!
@@ -40391,6 +40516,178 @@ _defineProperty(SearchBox, "defaultProps", {
 
 /***/ }),
 
+/***/ "./node_modules/react-instantsearch-dom/dist/es/components/Select.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/react-instantsearch-dom/dist/es/components/Select.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Select)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+var Select = /*#__PURE__*/function (_Component) {
+  _inherits(Select, _Component);
+  var _super = _createSuper(Select);
+  function Select() {
+    var _this;
+    _classCallCheck(this, Select);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _super.call.apply(_super, [this].concat(args));
+    _defineProperty(_assertThisInitialized(_this), "onChange", function (e) {
+      _this.props.onSelect(e.target.value);
+    });
+    return _this;
+  }
+  _createClass(Select, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+        cx = _this$props.cx,
+        id = _this$props.id,
+        items = _this$props.items,
+        selectedItem = _this$props.selectedItem;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
+        id: id,
+        className: cx('select'),
+        value: selectedItem,
+        onChange: this.onChange
+      }, items.map(function (item) {
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+          className: cx('option'),
+          key: item.key === undefined ? item.value : item.key,
+          disabled: item.disabled,
+          value: item.value
+        }, item.label === undefined ? item.value : item.label);
+      }));
+    }
+  }]);
+  return Select;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+_defineProperty(Select, "propTypes", {
+  cx: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().func.isRequired),
+  id: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string),
+  onSelect: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().func.isRequired),
+  items: prop_types__WEBPACK_IMPORTED_MODULE_1___default().arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_1___default().shape({
+    value: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_1___default().string), (prop_types__WEBPACK_IMPORTED_MODULE_1___default().number)]).isRequired,
+    key: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_1___default().string), (prop_types__WEBPACK_IMPORTED_MODULE_1___default().number)]),
+    label: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().string),
+    disabled: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool)
+  })).isRequired,
+  selectedItem: prop_types__WEBPACK_IMPORTED_MODULE_1___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_1___default().string), (prop_types__WEBPACK_IMPORTED_MODULE_1___default().number)]).isRequired
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/react-instantsearch-dom/dist/es/components/SortBy.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/react-instantsearch-dom/dist/es/components/SortBy.js ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _core_utils_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../core/utils.js */ "./node_modules/react-instantsearch-dom/dist/es/core/utils.js");
+/* harmony import */ var _Select_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Select.js */ "./node_modules/react-instantsearch-dom/dist/es/components/Select.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
+
+
+var cx = (0,_core_utils_js__WEBPACK_IMPORTED_MODULE_2__.createClassNames)('SortBy');
+var SortBy = /*#__PURE__*/function (_Component) {
+  _inherits(SortBy, _Component);
+  var _super = _createSuper(SortBy);
+  function SortBy() {
+    _classCallCheck(this, SortBy);
+    return _super.apply(this, arguments);
+  }
+  _createClass(SortBy, [{
+    key: "render",
+    value: function render() {
+      var _this$props = this.props,
+        id = _this$props.id,
+        items = _this$props.items,
+        currentRefinement = _this$props.currentRefinement,
+        refine = _this$props.refine,
+        className = _this$props.className;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+        className: classnames__WEBPACK_IMPORTED_MODULE_1___default()(cx(''), className)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Select_js__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        id: id,
+        cx: cx,
+        items: items,
+        selectedItem: currentRefinement,
+        onSelect: refine
+      }));
+    }
+  }]);
+  return SortBy;
+}(react__WEBPACK_IMPORTED_MODULE_0__.Component);
+_defineProperty(SortBy, "propTypes", {
+  id: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string),
+  items: prop_types__WEBPACK_IMPORTED_MODULE_4___default().arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_4___default().shape({
+    label: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string),
+    value: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string.isRequired)
+  })).isRequired,
+  currentRefinement: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string.isRequired),
+  refine: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().func.isRequired),
+  className: (prop_types__WEBPACK_IMPORTED_MODULE_4___default().string)
+});
+_defineProperty(SortBy, "defaultProps", {
+  className: ''
+});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SortBy);
+
+/***/ }),
+
 /***/ "./node_modules/react-instantsearch-dom/dist/es/core/utils.js":
 /*!********************************************************************!*\
   !*** ./node_modules/react-instantsearch-dom/dist/es/core/utils.js ***!
@@ -40531,6 +40828,61 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_instantsearch_core__WEBPACK_IMPORTED_MODULE_0__["default"])(_components_Highlight_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
   $$widgetType: 'ais.highlight'
 }));
+
+/***/ }),
+
+/***/ "./node_modules/react-instantsearch-dom/dist/es/widgets/Panel.js":
+/*!***********************************************************************!*\
+  !*** ./node_modules/react-instantsearch-dom/dist/es/widgets/Panel.js ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _components_Panel_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Panel.js */ "./node_modules/react-instantsearch-dom/dist/es/components/Panel.js");
+
+
+/**
+ * The Panel widget wraps other widgets in a consistent panel design.
+ * It also reacts, indicates and set CSS classes when widgets are no more relevant for refining.
+ * E.g. when a RefinementList becomes empty because of the current search results.
+ *
+ * @name Panel
+ * @kind widget
+ * @propType {string} [className] - Adds a className on the root element.
+ * @propType {node} [header] - Adds a header to the widget.
+ * @propType {node} [footer] - Adds a footer to the widget.
+ * @themeKey ais-Panel - the root div of the Panel
+ * @themeKey ais-Panel--noRefinement - the root div of the Panel without refinement
+ * @themeKey ais-Panel-header - the header of the Panel (optional)
+ * @themeKey ais-Panel-body - the body of the Panel
+ * @themeKey ais-Panel-footer - the footer of the Panel (optional)
+ * @example
+ * import React from 'react';
+ * import algoliasearch from 'algoliasearch/lite';
+ * import { InstantSearch, Panel, RefinementList } from 'react-instantsearch-dom';
+ *
+ * const searchClient = algoliasearch(
+ *   'latency',
+ *   '6be0576ff61c053d5f9a3225e2a90f76'
+ * );
+ *
+ * const App = () => (
+ *   <InstantSearch
+ *     searchClient={searchClient}
+ *     indexName="instant_search"
+ *   >
+ *     <Panel header="Categories">
+ *       <RefinementList attribute="categories" />
+ *     </Panel>
+ *   </InstantSearch>
+ * );
+ */
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_components_Panel_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 /***/ }),
 
@@ -40682,6 +41034,68 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_instantsearch_core__WEBPACK_IMPORTED_MODULE_0__["default"])(_components_SearchBox_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
   $$widgetType: 'ais.searchBox'
+}));
+
+/***/ }),
+
+/***/ "./node_modules/react-instantsearch-dom/dist/es/widgets/SortBy.js":
+/*!************************************************************************!*\
+  !*** ./node_modules/react-instantsearch-dom/dist/es/widgets/SortBy.js ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_instantsearch_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-instantsearch-core */ "./node_modules/react-instantsearch-core/dist/es/connectors/connectSortBy.js");
+/* harmony import */ var _components_SortBy_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/SortBy.js */ "./node_modules/react-instantsearch-dom/dist/es/components/SortBy.js");
+
+
+
+/**
+ * The SortBy component displays a list of indexes allowing a user to change the hits are sorting.
+ * @name SortBy
+ * @requirements Algolia handles sorting by creating replica indices. [Read more about sorting](https://www.algolia.com/doc/guides/relevance/sorting/) on
+ * the Algolia website.
+ * @kind widget
+ * @propType {string} id - The id of the select input
+ * @propType {{value: string, label: string}[]} items - The list of indexes to search in.
+ * @propType {string} defaultRefinement - The default selected index.
+ * @propType {function} [transformItems] - Function to modify the items being displayed, e.g. for filtering or sorting them. Takes an items as parameter and expects it back in return.
+ * @themeKey ais-SortBy - the root div of the widget
+ * @themeKey ais-SortBy-select - the select
+ * @themeKey ais-SortBy-option - the select option
+ * @example
+ * import React from 'react';
+ * import algoliasearch from 'algoliasearch/lite';
+ * import { InstantSearch, SortBy } from 'react-instantsearch-dom';
+ *
+ * const searchClient = algoliasearch(
+ *   'latency',
+ *   '6be0576ff61c053d5f9a3225e2a90f76'
+ * );
+ *
+ * const App = () => (
+ *   <InstantSearch
+ *     searchClient={searchClient}
+ *     indexName="instant_search"
+ *   >
+ *     <SortBy
+ *       defaultRefinement="instant_search"
+ *       items={[
+ *         { value: 'instant_search', label: 'Featured' },
+ *         { value: 'instant_search_price_asc', label: 'Price asc.' },
+ *         { value: 'instant_search_price_desc', label: 'Price desc.' },
+ *       ]}
+ *     />
+ *   </InstantSearch>
+ * );
+ */
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_instantsearch_core__WEBPACK_IMPORTED_MODULE_0__["default"])(_components_SortBy_js__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  $$widgetType: 'ais.sortBy'
 }));
 
 /***/ }),
@@ -45761,7 +46175,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
 /* harmony import */ var react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-instantsearch-dom */ "./node_modules/react-instantsearch-core/dist/es/widgets/InstantSearch.js");
 /* harmony import */ var react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-instantsearch-dom */ "./node_modules/react-instantsearch-dom/dist/es/widgets/SearchBox.js");
-/* harmony import */ var react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-instantsearch-dom */ "./node_modules/react-instantsearch-dom/dist/es/widgets/RefinementList.js");
+/* harmony import */ var react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-instantsearch-dom */ "./node_modules/react-instantsearch-dom/dist/es/widgets/SortBy.js");
+/* harmony import */ var react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-instantsearch-dom */ "./node_modules/react-instantsearch-dom/dist/es/widgets/Panel.js");
+/* harmony import */ var react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-instantsearch-dom */ "./node_modules/react-instantsearch-dom/dist/es/widgets/RefinementList.js");
 /* harmony import */ var _components_AlgoliaHits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/AlgoliaHits */ "./src/js/algolia/components/AlgoliaHits.jsx");
 /* harmony import */ var _components_Search__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Search */ "./src/js/algolia/components/Search.jsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
@@ -45775,8 +46191,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var searchClient = algoliasearch__WEBPACK_IMPORTED_MODULE_5___default()('DMCWZLP909', '6d166fec56fc3a3b6eefb3ec143ecfa7');
 var AlgoliaSearch = function AlgoliaSearch() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_6__["default"], {
       searchClient: searchClient,
       indexName: "shopify_products",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("header", {
@@ -45788,26 +46204,40 @@ var AlgoliaSearch = function AlgoliaSearch() {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
         "class": "grid grid-cols-5 mx-[4rem]",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
-            children: "Types"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_8__["default"], {
-            attribute: "product_type"
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            defaultRefinement: "shopify_products",
+            items: [{
+              label: 'Featured',
+              value: 'shopify_products'
+            }, {
+              label: 'Price (asc)',
+              value: 'shopify_product_price_asc'
+            }]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("hr", {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_9__["default"], {
+            header: "Types",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_10__["default"], {
+              attribute: "product_type"
+            })
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
             children: "Colors"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_8__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_10__["default"], {
             attribute: "option_names"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h3", {
+            children: "Vendor"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_instantsearch_dom__WEBPACK_IMPORTED_MODULE_10__["default"], {
+            attribute: "vendor"
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
           "class": "col-span-4",
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
             className: "grid grid-cols-1",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_AlgoliaHits__WEBPACK_IMPORTED_MODULE_2__.CustomHitCards, {})
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_AlgoliaHits__WEBPACK_IMPORTED_MODULE_2__.CustomHitCards, {
+              handleAddProductToCart: handleAddProductToCart
+            })
           })
         })]
       })]
-    }), "// ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
-      children: "Algolia Search"
-    })]
+    })
   });
 };
 var root = react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(document.getElementById('algolia-container'));
